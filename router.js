@@ -7,6 +7,8 @@ const _ = require('underscore');
 const CardTypes = ['land', 'creature', 'instant', 'sorcery', 'enchantment', 'artifact', 'planeswalker']
 const ManaTypes = {black: '{B}', blue: '{U}', red: '{R}', white: '{W}', green: '{G}', colorless: '{C}'}
 
+const reservedWords = ['of', 'the', 'and', 'or']
+
 const serverMessage = msg => {
   console.log(`${new Date()}: ${msg}`.underline.green)
 }
@@ -16,7 +18,7 @@ const countManaSymbols = cmc => {
 }
 
 const formatString = str => {
-  return str.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
+  return str.split('_').map(word => ~reservedWords.indexOf(word) ? word : word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
 }
 
 module.exports = router;
