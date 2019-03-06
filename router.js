@@ -7,7 +7,7 @@ const _ = require('underscore');
 const CardTypes = ['land', 'creature', 'instant', 'sorcery', 'enchantment', 'artifact', 'planeswalker']
 const ManaTypes = {black: '{B}', blue: '{U}', red: '{R}', white: '{W}', green: '{G}', colorless: '{C}'}
 
-const reservedWords = ['of', 'the', 'and', 'or']
+const reservedWords = ['of', 'the', 'and', 'or', 'to']
 
 const serverMessage = msg => {
   console.log(`${new Date()}: ${msg}`.underline.green)
