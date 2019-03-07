@@ -13,8 +13,8 @@ const serverMessage = msg => {
   console.log(`${new Date()}: ${msg}`.underline.green)
 }
 
-const countManaSymbols = cmc => {
-  return cmc.replace(/[^A-Za-z]+/g, '').length;
+const countManaSymbols = (cmc, color) => {
+  return cmc.replace(/[{}]/g,'').split('').filter(l => l === ManaTypes[color]).length
 }
 
 const formatString = str => {
@@ -72,7 +72,7 @@ router.post('/deck-analysis', (req, res, next) => {
       counts[type] = cards.filter(l => l.type_line.includes(type.charAt(0).toUpperCase() + type.slice(1))).map(c => c.count).reduce((a,c) => a+c, 0);
     });
     Object.keys(ManaTypes).forEach(key => {
-      manaCosts.push({color: key, count:cards.filter(c => c.mana_cost.includes(ManaTypes[key])).map(c => c.count * countManaSymbols(c.mana_cost)).reduce((a, c) => a+c, 0)});
+      manaCosts.push({color: key, count:cards.filter(c => c.mana_cost.includes(ManaTypes[key])).map(c => c.count * countManaSymbols(c.mana_cost, key)).reduce((a, c) => a+c, 0)});
     });
     manaCosts.sort((a,b) => b.count - a.count);
     const completeTime = new Date();
