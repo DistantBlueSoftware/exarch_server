@@ -14,7 +14,8 @@ const serverMessage = msg => {
 }
 
 const countManaSymbols = (cmc, color) => {
-  return cmc.replace(/[{}]/g,'').split('').filter(l => l === ManaTypes[color]).length
+  const search_term = new RegExp(ManaTypes[color], "g");    
+  return cmc.match(search_term).length;
 }
 
 const formatString = str => {
