@@ -9,7 +9,7 @@ const hypergeo = require('./hypergeo');
 const cmcTable = [[18,.8],[19,1.12],[20,1.44],[21,1.76],[22,2.08],[23,2.4],[24,2.72],[25,3.04],[26,3.36],[27,3.68]]
 
 const CardTypes = ['land', 'creature', 'instant', 'sorcery', 'enchantment', 'artifact', 'planeswalker']
-const ManaTypes = {B: '{B}', U: '{U}', R: '{R}', W: '{W}', G: '{G}', GW: '{G/W}', C: '{C}'}
+const ManaTypes = {B: '{B}', U: '{U}', R: '{R}', W: '{W}', G: '{G}', GW: '{G/W}', RW: '{R/W}', BR: '{B/R}', UW: '{W/U}', BW: '{W/B}', GU: '{G/U}', UR: '{U/R}', UB: '{U/B}', GR: '{R/G}', GB: '{B/G}', C: '{C}'}
 
 const reservedWords = ['in','of', 'the', 'and', 'or', 'to', 'for', 'with']
 
