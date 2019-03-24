@@ -33,8 +33,12 @@ const cantripCalc = (deck) => {
   return answer;
 }
 
+const isAccelerant = (card) => {
+  return (card.name === 'Aether Vial' || card.name === 'Arbor Elf' || card.name === 'Utopia Sprawl' || card.oracle_text.toLowerCase().includes('{t}: add') || (card.oracle_text.toLowerCase().includes('search') && card.oracle_text.toLowerCase().includes('land'))) && card.cmc <= 2
+}
+
 const accelCalc = (deck) => {
-  let answer = deck.noLands.filter(c => c.name === 'Aether Vial' || c.oracle_text.toLowerCase().includes('{t}: add') || (c.oracle_text.toLowerCase().includes('search') && c.oracle_text.toLowerCase().includes('land')) && c.cmc <= 2).reduce((a,c) => a+c.count, 0)
+  let answer = deck.noLands.filter(c => isAccelerant(c)).reduce((a,c) => a+c.count, 0)
   if (answer) deck.adjustedCMC -= ((answer * .5) / ((deck.noLands.size - answer) || deck.noLands.size)).toFixed(2);
   return answer;
 }
