@@ -27,14 +27,14 @@ const countManaSymbols = (cmc, color) => {
 }
 
 const cantripCalc = (deck) => {
-  let answer = deck.noLands.filter(c => c.oracle_text.toLowerCase().includes('draw') && c.cmc < 2).reduce((a,c) => a+c.count, 0)
+  let answer = deck.noLands.filter(c => c.oracle_text && c.oracle_text.toLowerCase().includes('draw') && c.cmc < 2).reduce((a,c) => a+c.count, 0)
   
   if (answer) deck.adjustedCMC -= (answer * .75) / (deck.noLands.size - answer)
   return answer;
 }
 
 const isAccelerant = (card) => {
-  return (card.name === 'Aether Vial' || card.name === 'Arbor Elf' || card.name === 'Utopia Sprawl' || card.oracle_text.toLowerCase().includes('{t}: add') || (card.oracle_text.toLowerCase().includes('search') && card.oracle_text.toLowerCase().includes('land'))) && card.cmc <= 2
+  return (card.name === 'Aether Vial' || card.name === 'Arbor Elf' || card.name === 'Utopia Sprawl' || card.oracle_text && (card.oracle_text.toLowerCase().includes('{t}: add') || (card.oracle_text.toLowerCase().includes('search') && card.oracle_text.toLowerCase().includes('land')))) && card.cmc <= 2
 }
 
 const accelCalc = (deck) => {
@@ -137,7 +137,7 @@ router.post('/deck-analysis', (req, res, next) => {
       if (card) {
         card.count = l.count || 0;
         // adjust cmc for alternate casting cost (delve)
-        card.adjCMC = card.oracle_text.includes('Delve') ? countManaSymbols(card.mana_cost) : card.cmc;
+        card.adjCMC = card.oracle_text && card.oracle_text.includes('Delve') ? countManaSymbols(card.mana_cost) : card.cmc;
       }
       else deckData.notFound.push(formatString(l.card))
     })
